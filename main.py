@@ -7,14 +7,18 @@ from langchain.agents import Tool
 from langchain_openai import ChatOpenAI
 import os
 import re
+from datetime import datetime
+from dotenv import load_dotenv
+load_dotenv()
+
+current_month = datetime.now().strftime("%B %Y")
 
 # NOTE: to find which model names you have, use cli tool:  `ollama list`
 llm = ChatOpenAI(
-      model='llama2',
+      model='codellama:70b',
       base_url="http://localhost:11434/v1",
       api_key="NA"
     )
-
 
 duckduckgo_search = DuckDuckGoSearchRun()
 
@@ -64,7 +68,7 @@ def create_crewai_setup(product_name):
 
     # Define Tasks
     task1 = Task(
-        description=f"""Analyze the market demand for {product_name}. Current month is Jan 2024.
+        description=f"""Analyze the market demand for {product_name}. Current month is May 2024.
                         Write a report on the ideal customer profile and marketing 
                         strategies to reach the widest possible audience. 
                         Include at least 10 bullet points addressing key marketing areas.""",
@@ -151,12 +155,10 @@ class StreamToExpander:
 
 # Streamlit interface
 def run_crewai_app():
-    st.title("AI Agent Business Product Launch")
-    with st.expander("About the Team:"):
+    st.title("CrewAI")
+    with st.expander("About the Crew:"):
         st.subheader("Diagram")
         left_co, cent_co,last_co = st.columns(3)
-        with cent_co:
-            st.image("my_img.png")
 
         st.subheader("Market Research Analyst")
         st.text("""       
@@ -197,7 +199,7 @@ def run_crewai_app():
                Write a report on the scalability and revenue streams 
                for the product. Include at least 10 bullet points 
                on key business areas. Give Business Plan, 
-               Goals and Timeline for the product launch. Current month is Jan 2024. """)
+               Goals and Timeline for the product launch. Current month is {current_month}. """)
     
     product_name = st.text_input("Enter a product name to analyze the market and business strategy.")
 
