@@ -3,7 +3,6 @@
 Once you've completed the setup steps, you can run the Streamlit application using the following command:
 
 ```
-pip install streamlit crewai --upgrade
 streamlit run main.py
 ```
 
